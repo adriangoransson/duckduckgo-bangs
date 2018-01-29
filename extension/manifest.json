@@ -1,0 +1,28 @@
+{
+  "manifest_version": 2,
+  "name": "Duckduckgo-bangs",
+  "developer": {
+    "name": "Adrian Göransson",
+    "url": "https://adriang.se"
+  },
+  "version": "1.0",
+  "description": "Adds context search for user defined DuckDuckGo bangs",
+  "background": {
+    "scripts": [
+      "contextmenu.js"
+    ]
+  },
+  "permissions": [
+    "contextMenus",
+    "storage"
+  ],
+  "options_ui": {
+    "page": "options.html",
+    "browser_style": true
+  },
+  "applications": {
+    "gecko": {
+      "id": "duckduckgo-bangs@adriangoransson"
+    }
+  }
+}
