@@ -1,6 +1,28 @@
 const ID_PREFIX = 'ddg-bangs';
 const URL = 'https://duckduckgo.com/?q=';
 
+const defaultSettings = {
+  newTab: true,
+  bangs: [
+    {
+      display: 'DuckDuckGo',
+      bang: '',
+    },
+    {
+      display: 'DuckDuckGo (I am feeling ducky)',
+      bang: '!',
+    },
+    {
+      display: 'Google',
+      bang: '!g',
+    },
+    {
+      display: 'Wikipedia',
+      bang: '!w',
+    },
+  ],
+};
+
 let bangs;
 let newTab;
 
@@ -40,5 +62,12 @@ function getSettings() {
   });
 }
 
+function firstRun(details) {
+  if (details.reason === 'install') {
+    browser.storage.sync.set({ settings: defaultSettings });
+  }
+}
+
 getSettings();
 browser.storage.onChanged.addListener(getSettings);
+browser.runtime.onInstalled.addListener(firstRun);

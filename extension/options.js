@@ -9,28 +9,6 @@ function restore() {
   return browser.storage.sync.get('settings');
 }
 
-const defaultData = {
-  newTab: true,
-  bangs: [
-    {
-      display: 'DuckDuckGo',
-      bang: '',
-    },
-    {
-      display: 'DuckDuckGo (I feel ducky)',
-      bang: '!',
-    },
-    {
-      display: 'Google',
-      bang: '!g',
-    },
-    {
-      display: 'Wikipedia',
-      bang: '!w',
-    },
-  ],
-};
-
 function ListView(vm, data) {
   const settings = data;
 
@@ -118,12 +96,7 @@ function ListView(vm, data) {
 }
 
 restore().then((data) => {
-  let settings;
-  if (Object.prototype.hasOwnProperty.call(data, 'settings')) {
-    ({ settings } = data);
-  } else {
-    settings = defaultData;
-  }
+  const { settings } = data;
 
   domvm.createView(ListView, settings).mount(document.body);
 });
