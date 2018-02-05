@@ -15,6 +15,12 @@ function ListView(vm, data) {
   function toggleNewTab() {
     settings.newTab = !settings.newTab;
     save(settings);
+    vm.redraw();
+  }
+
+  function toggleBackgroundTab() {
+    settings.backgroundTab = !settings.backgroundTab;
+    save(settings);
   }
 
   function delItem(i) {
@@ -54,9 +60,19 @@ function ListView(vm, data) {
     el('div', [
       el('h2', 'Preferences'),
 
-      el('p.browser-style', [
+      el('p', [
         el('input#new-tab', { type: 'checkbox', checked: data.newTab, onchange: [toggleNewTab] }),
         el('label', { for: 'new-tab' }, 'Open search in new tab'),
+      ]),
+
+      el('p', [
+        el('input#background-tab', {
+          type: 'checkbox',
+          disabled: !data.newTab,
+          checked: data.backgroundTab,
+          onchange: [toggleBackgroundTab],
+        }),
+        el('label', { for: 'background-tab' }, 'Open new tab in background'),
       ]),
 
       el('h2', 'DuckDuckGo bangs'),

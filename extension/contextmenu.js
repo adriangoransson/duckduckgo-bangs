@@ -3,6 +3,7 @@ const URL = 'https://duckduckgo.com/?q=';
 
 const defaultSettings = {
   newTab: true,
+  backgroundTab: false,
   bangs: [
     {
       display: 'DuckDuckGo',
@@ -25,12 +26,13 @@ const defaultSettings = {
 
 let bangs;
 let newTab;
+let backgroundTab;
 
 function search(info) {
   if (info.menuItemId.startsWith(ID_PREFIX)) {
     const url = `${URL + info.menuItemId.substr(ID_PREFIX.length + 1)} ${encodeURIComponent(info.selectionText.trim())}`;
     if (newTab) {
-      browser.tabs.create({ url });
+      browser.tabs.create({ url, active: !backgroundTab });
     } else {
       browser.tabs.update({ url });
     }
@@ -55,7 +57,7 @@ function createMenus() {
 function getSettings() {
   browser.storage.sync.get('settings').then((data) => {
     if (Object.prototype.hasOwnProperty.call(data, 'settings')) {
-      ({ newTab, bangs } = data.settings);
+      ({ newTab, backgroundTab, bangs } = data.settings);
 
       createMenus();
     }
