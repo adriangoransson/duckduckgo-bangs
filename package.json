@@ -1,6 +1,6 @@
 {
   "name": "duckduckgo-bangs",
-  "version": "1.0.0",
+  "version": "1.1.1",
   "description": "Webextension that provides context search using different DuckDuckGo bangs",
   "main": "index.js",
   "author": "Adrian Göransson",
