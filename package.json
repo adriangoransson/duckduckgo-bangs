@@ -1,6 +1,6 @@
 {
   "name": "duckduckgo-bangs",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "Webextension that provides context search using different DuckDuckGo bangs",
   "main": "index.js",
   "author": "Adrian Göransson",
@@ -11,12 +11,10 @@
     "build": "web-ext build --source-dir ./extension/"
   },
   "devDependencies": {
-    "eslint": "^4.16.0",
-    "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-import": "^2.8.0",
-    "web-ext": "^2.3.2"
-  },
-  "dependencies": {
-    "domvm": "^3.2.8"
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.1",
+    "lighterhtml": "^2.5.0",
+    "web-ext": "^4.1.0"
   }
 }
