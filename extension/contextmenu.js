@@ -1,4 +1,3 @@
-const ID_PREFIX = 'ddg-bangs';
 const URL = 'https://duckduckgo.com/?q=';
 
 const defaultSettings = {
@@ -24,42 +23,34 @@ const defaultSettings = {
   ],
 };
 
-let bangs;
-let newTab;
-let backgroundTab;
+function search(query, { newTab, backgroundTab, bang }) {
+  const url = `${URL}${encodeURIComponent(`${bang} ${query}`)}`;
 
-function search(info) {
-  if (info.menuItemId.startsWith(ID_PREFIX)) {
-    const url = `${URL + info.menuItemId.substr(ID_PREFIX.length + 1)} ${encodeURIComponent(info.selectionText.trim())}`;
-    if (newTab) {
-      browser.tabs.create({ url, active: !backgroundTab });
-    } else {
-      browser.tabs.update({ url });
-    }
+  if (newTab) {
+    browser.tabs.create({ url, active: !backgroundTab });
+  } else {
+    browser.tabs.update({ url });
   }
 }
 
-function createMenus() {
+function createMenus({ newTab, backgroundTab, bangs }) {
   browser.contextMenus.removeAll();
-  bangs.forEach((element) => {
-    browser.contextMenus.create({
-      id: `${ID_PREFIX}-${element.bang}`,
-      title: element.display,
-      contexts: ['selection'],
-    });
 
-    if (!browser.contextMenus.onClicked.hasListener(search)) {
-      browser.contextMenus.onClicked.addListener(search);
-    }
+  bangs.forEach(({ display, bang }) => {
+    browser.contextMenus.create({
+      title: display,
+      contexts: ['selection'],
+      onclick(e) {
+        search(e.selectionText.trim(), { newTab, backgroundTab, bang });
+      },
+    });
   });
 }
 
-function getSettings() {
+function create() {
   browser.storage.sync.get('settings').then((data) => {
     if (Object.prototype.hasOwnProperty.call(data, 'settings')) {
-      ({ newTab, backgroundTab, bangs } = data.settings);
-
-      createMenus();
+      createMenus(data.settings);
     }
   });
 }
@@ -70,6 +61,6 @@ function firstRun(details) {
   }
 }
 
-getSettings();
-browser.storage.onChanged.addListener(getSettings);
+create();
+browser.storage.onChanged.addListener(create);
 browser.runtime.onInstalled.addListener(firstRun);
