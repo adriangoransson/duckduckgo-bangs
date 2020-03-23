@@ -55,12 +55,14 @@ function create() {
   });
 }
 
-function firstRun(details) {
-  if (details.reason === 'install') {
-    browser.storage.sync.set({ settings: defaultSettings });
-  }
-}
-
 create();
 browser.storage.onChanged.addListener(create);
-browser.runtime.onInstalled.addListener(firstRun);
+
+browser.runtime.onInstalled.addListener(async ({ reason }) => {
+  // first run
+  if (reason === 'install') {
+    await browser.storage.sync.set({ settings: defaultSettings });
+
+    browser.runtime.openOptionsPage();
+  }
+});
