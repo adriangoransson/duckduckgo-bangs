@@ -67,6 +67,15 @@ function options(node, settings) {
     <p>
       <button onclick=${add}>Add</button>
     </p>
+
+    <h3>Import/Export bangs as JSON</h3>
+    <span>
+      <button onclick=${() => { document.getElementById('import-bangs').click(); }}>Import</button>
+      <input onchange=${importBangs} id="import-bangs" type="file" accept=".json" style="display: none">
+      <a href=${exportLink()} download="ddgo-bangs.json">
+        <button>Export</button>
+      </a>
+    </span>
   `);
 
   function toggleNewTab() {
@@ -110,6 +119,31 @@ function options(node, settings) {
 
     settings.bangs = bangs;
     rerender();
+  }
+
+  function exportLink() {
+    return `data:application/json;base64, ${btoa(JSON.stringify(settings.bangs))}`;
+  }
+
+  function importBangs({ currentTarget: { files } }) {
+    if (!files[0].text) { return; }
+
+    files[0].text().then((text) => {
+      try {
+        const data = JSON.parse(text);
+
+        data.forEach(({ display, bang }) => {
+          if (typeof display === 'string' && display.length >= 0
+            && typeof bang === 'string' && bang.length >= 0) {
+            settings.bangs.push({ display, bang });
+          }
+        });
+
+        rerender();
+      } catch (e) {
+        // continue
+      }
+    });
   }
 
   // Save on every render
