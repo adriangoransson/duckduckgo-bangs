@@ -54,7 +54,7 @@ function options(node, settings) {
 
       ${settings.bangs.map(({ display, bang }, i) => html`
         <tr>
-          <td><input oninput=${(e) => update(i, 'display', e.target.value)} value=${display}></td>
+          <td><input oninput=${(e) => update(i, 'display', e.target.value)} value=${display} required></td>
           <td><input oninput=${(e) => update(i, 'bang', e.target.value)} value=${bang}></td>
           <td><button onclick=${() => moveUp(i)} disabled=${i === 0}>⬆</button></td>
           <td><button onclick=${() => moveDown(i)} disabled=${i === length - 1}>⬇</button></td>
@@ -105,12 +105,13 @@ function options(node, settings) {
   }
 
   function add() {
-    const bangs = settings.bangs.filter(({ display, bang }) => display || bang);
+    const bangs = settings.bangs.filter(({ display }) => display);
     bangs.push({ display: '', bang: '' });
 
     settings.bangs = bangs;
     rerender();
   }
 
+  // Save on every render
   save(settings);
 }
