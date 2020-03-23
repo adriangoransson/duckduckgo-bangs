@@ -6,7 +6,7 @@
   "author": "Adrian Göransson",
   "license": "MIT",
   "scripts": {
-    "start": "web-ext run --source-dir ./extension/",
+    "start": "web-ext run --verbose --source-dir ./extension/",
     "lint": "eslint ./extension/ && web-ext lint --source-dir ./extension/",
     "build": "web-ext build --source-dir ./extension/"
   },
