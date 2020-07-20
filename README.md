@@ -6,9 +6,9 @@ Bangs and their display name in the menu are fully customizable and there is an 
 
 This extension is unofficial and has no affiliation with DuckDuckGo.
 
-![](https://addons.cdn.mozilla.net/user-media/previews/full/234/234345.png?modified=1584962464)
+![](./screenshots/use.png)
 
-![](https://addons.cdn.mozilla.net/user-media/previews/full/234/234346.png?modified=1584962464)
+![](./screenshots/prefs.png)
 
 ## Building
 `npm run start` will start a watcher and fire up Firefox for testing.
