@@ -15,6 +15,6 @@
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-plugin-import": "^2.20.1",
     "lighterhtml": "^2.5.0",
-    "web-ext": "^4.1.0"
+    "web-ext": "^4.3.0"
   }
 }
